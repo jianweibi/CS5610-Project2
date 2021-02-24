@@ -1,0 +1,19 @@
+{
+  "name": "cs5610-project2",
+  "version": "1.0.0",
+  "description": "Group project of CS5610",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuchen112211/CS5610-Project2.git"
+  },
+  "author": "John Doe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yuchen112211/CS5610-Project2/issues"
+  },
+  "homepage": "https://github.com/Yuchen112211/CS5610-Project2#readme"
+}
