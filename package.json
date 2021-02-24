@@ -4,7 +4,8 @@
   "description": "Group project of CS5610",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No test specified\""
+    "test": "echo \"No test specified\"",
+    "start": "node hello.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/Yuchen112211/CS5610-Project2#readme",
   "devDependencies": {
     "eslint": "7.20.0",
+    "eslint-plugin-react": "^7.22.0",
     "prettier": "2.2.1"
   }
 }
