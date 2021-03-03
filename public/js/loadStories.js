@@ -11,14 +11,8 @@ function addSingleButton(element, hasPic, message) {
   } else {
     div.className = "col-md-4";
   }
+  div.innerHTML = `<div class="btn btn-icon ${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>`;
 
-  var button = document.createElement("div");
-  button.className = "btn btn-icon " + message;
-  var image = document.createElement("img");
-  image.setAttribute("src", "../assets/img/" + message + ".png");
-
-  button.appendChild(image);
-  div.appendChild(button);
   element.appendChild(div);
 }
 
@@ -50,16 +44,7 @@ getAllData().then((res) => {
     } else {
       thirdElement.className = "col-md-12";
     }
-    var forthElement = document.createElement("h3");
-    forthElement.textContent = "[" + story._id + "]";
-    var author = document.createElement("h5");
-    author.textContent = "by " + story.username;
-    var content = document.createElement("p");
-    content.textContent = story.content;
-
-    thirdElement.appendChild(forthElement);
-    thirdElement.appendChild(author);
-    thirdElement.appendChild(content);
+    thirdElement.innerHTML = `<h3>[${story._id}]</h3><h5>by ${story.username}</h5><p>${story.content}</p>`;
 
     addButtons(thirdElement, hasPic);
 
@@ -67,13 +52,8 @@ getAllData().then((res) => {
     if (hasPic) {
       var parentDiv = document.createElement("div");
       parentDiv.className = "col-md-6";
-      var imageDiv = document.createElement("div");
-      imageDiv.className = "image-container";
-      imageDiv.setAttribute(
-        "style",
-        "background-image: url('" + story.imageName + "')"
-      );
-      parentDiv.appendChild(imageDiv);
+      parentDiv.innerHTML = `<div class="image-container" style="background-image: url('${story.imageName}')"></div>`;
+
       secondElement.appendChild(parentDiv);
     }
     topElement.appendChild(secondElement);
