@@ -23,9 +23,14 @@ const upload = multer({ storage: storage });
 
 // to support JSON-encoded bodies
 app.use(express.json());
-
 // Render static files
 app.use(express.static("public"));
+
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 app.post("/story", upload.single("story-pic"), (req, res) => {
   mongoClient.connect(mongoUrl, function (err, db) {
@@ -47,6 +52,26 @@ app.post("/story", upload.single("story-pic"), (req, res) => {
     });
   });
   res.redirect("/");
+});
+
+app.post("/reply", (req, res) => {
+  mongoClient.connect(mongoUrl, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("proj2");
+    // TODO: Error handling
+
+    var reply = {
+      parentStory: req.query.storyId,
+      username: req.body.replyUsername,
+      replyContent: req.body.replyContent,
+      datetime: new Date(),
+    };
+    dbo.collection("replies").insertOne(reply, function (err) {
+      if (err) throw err;
+      db.close();
+    });
+  });
+  res.redirect("/main");
 });
 
 app.post("/story/detail", (req, res) => {
@@ -71,6 +96,7 @@ app.post("/story/detail", (req, res) => {
       };
     }
     await dbo.collection("stories").updateOne(filter, updateDoc, options);
+    db.close();
   });
   res.redirect("/main");
 });
@@ -78,9 +104,7 @@ app.post("/story/detail", (req, res) => {
 app.get("/getStories", function (req, res) {
   res.set("Content-Type", "text/html");
   mongoClient.connect(mongoUrl, function (err, db) {
-    if (err) {
-      throw err;
-    }
+    if (err) throw err;
     var dbo = db.db("proj2");
     dbo
       .collection("stories")
@@ -89,6 +113,23 @@ app.get("/getStories", function (req, res) {
         if (err) {
           throw err;
         }
+        res.status(200).send({ result: result });
+        db.close();
+      });
+  });
+});
+
+app.get("/getReplies", function (req, res) {
+  res.set("Content-Type", "text/html");
+  mongoClient.connect(mongoUrl, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("proj2");
+    const filter = { parentStory: req.query.parentId };
+    dbo
+      .collection("replies")
+      .find(filter)
+      .toArray(function (err, result) {
+        if (err) throw err;
         res.status(200).send({ result: result });
         db.close();
       });

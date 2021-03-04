@@ -34,10 +34,43 @@ function addSingleButton(element, story, message) {
       statusRequest(message, story._id, newNumber);
     });
   } else {
-    div.addEventListener("click", function () {
-      var p = document.createElement("p");
-      p.innerText = "123123123testing";
-      div.appendChild(p);
+    var reply = document.createElement("div");
+    reply.className = "form-reply";
+    reply.innerHTML = `<form
+          id="form-reply-story"
+          action="reply?storyId=${story._id}"
+          method="post"
+          enctype="application/x-www-form-json"
+        >
+        <div class="form-group">
+            <label for="story-content">Reply to this story</label>
+            <textarea
+              class="form-control"
+              id="story-content"
+              name="replyContent"
+              placeholder="What you say?"
+            ></textarea>
+            <label for="story-username">Share your name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="story-username"
+              name="replyUsername"
+              placeholder="Batman"
+            />
+            <button type="submit" class="btn btn-primary btn-round">
+              Send
+            </button>
+          </div>
+        </form>`;
+    reply.style.display = "none";
+    div.appendChild(reply);
+    div.childNodes[0].addEventListener("click", function () {
+      if (div.childNodes[1].style.display == "block") {
+        div.childNodes[1].style.display = "none";
+      } else {
+        div.childNodes[1].style.display = "block";
+      }
     });
   }
   element.appendChild(div);
@@ -57,11 +90,12 @@ getAllData().then((res) => {
   var element = document.getElementsByClassName(
     "separator separator-primary"
   )[0];
-  res.result.forEach((story) => {
+  res.result.forEach(async (story) => {
     var hasPic = false;
 
     var topElement = document.createElement("div");
     topElement.className = "section-story-overview";
+    topElement.id = story._id;
     var secondElement = document.createElement("div");
     secondElement.className = "row";
     var thirdElement = document.createElement("div");
@@ -86,5 +120,8 @@ getAllData().then((res) => {
     }
     topElement.appendChild(secondElement);
     element.appendChild(topElement);
+
+    const replies = await getAllReplies(story._id);
+    renderReplies(topElement, replies, hasPic);
   });
 });
