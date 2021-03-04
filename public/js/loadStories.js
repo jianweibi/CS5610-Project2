@@ -4,25 +4,46 @@ async function getAllData() {
   return res;
 }
 
-function addSingleButton(element, hasPic, message) {
+function addSingleButton(element, story, message) {
   var div = document.createElement("div");
-  if (hasPic == false) {
+  if (story.hasPic == false) {
     div.className = "col-md-2";
   } else {
     div.className = "col-md-4";
   }
-  div.innerHTML = `<div class="btn btn-icon ${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>`;
+  if (message == "like") {
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
+  } else if (message == "dislike") {
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
+  } else {
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>`;
+  }
 
+  if (message != "comment") {
+    div.addEventListener("click", function () {
+      var newNumber;
+      if (message == "like") {
+        story.like += 1;
+        newNumber = story.like;
+        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
+      } else {
+        story.dislike += 1;
+        newNumber = story.dislike;
+        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
+      }
+      statusRequest(message, story._id, newNumber);
+    });
+  }
   element.appendChild(div);
 }
 
-function addButtons(element, hasPic) {
+function addButtons(element, story) {
   var rowElement = document.createElement("div");
   rowElement.className = "row";
 
-  addSingleButton(rowElement, hasPic, "like");
-  addSingleButton(rowElement, hasPic, "dislike");
-  addSingleButton(rowElement, hasPic, "comment");
+  addSingleButton(rowElement, story, "like");
+  addSingleButton(rowElement, story, "dislike");
+  addSingleButton(rowElement, story, "comment");
   element.appendChild(rowElement);
 }
 
@@ -44,9 +65,10 @@ getAllData().then((res) => {
     } else {
       thirdElement.className = "col-md-12";
     }
+    story.hasPic = hasPic;
     thirdElement.innerHTML = `<h3>[${story._id}]</h3><h5>by ${story.username}</h5><p>${story.content}</p>`;
 
-    addButtons(thirdElement, hasPic);
+    addButtons(thirdElement, story);
 
     secondElement.appendChild(thirdElement);
     if (hasPic) {

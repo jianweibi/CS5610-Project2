@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
-const mongoClient = require("mongodb").MongoClient;
+const mongo = require("mongodb");
+const mongoClient = mongo.MongoClient;
 var path = require("path");
 
 const app = express();
@@ -34,6 +35,8 @@ app.post("/story", upload.single("story-pic"), (req, res) => {
       username: req.body.username,
       content: req.body.content,
       datetime: new Date(),
+      like: 0,
+      dislike: 0,
     };
     if (req.file) {
       story.imageName = req.file.filename;
@@ -43,7 +46,33 @@ app.post("/story", upload.single("story-pic"), (req, res) => {
       db.close();
     });
   });
-  res.redirect("/");
+  res.redirect("/main");
+});
+
+app.post("/story/detail", (req, res) => {
+  mongoClient.connect(mongoUrl, async function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("proj2");
+
+    const filter = { _id: new mongo.ObjectId(req.body.id) };
+    const options = { upsert: false };
+    var updateDoc = {};
+    if (req.body.message == "like") {
+      updateDoc = {
+        $set: {
+          like: req.body.number,
+        },
+      };
+    } else {
+      updateDoc = {
+        $set: {
+          dislike: req.body.number,
+        },
+      };
+    }
+    await dbo.collection("stories").updateOne(filter, updateDoc, options);
+  });
+  res.redirect("/main");
 });
 
 app.get("/getStories", function (req, res) {
@@ -60,7 +89,6 @@ app.get("/getStories", function (req, res) {
         if (err) {
           throw err;
         }
-        exports.stories = result;
         res.status(200).send({ result: result });
         db.close();
       });
