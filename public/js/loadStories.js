@@ -12,26 +12,32 @@ function addSingleButton(element, story, message) {
     div.className = "col-md-4";
   }
   if (message == "like") {
-    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="like" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
   } else if (message == "dislike") {
-    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="dislike" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
   } else {
-    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>`;
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="comment" src="../assets/img/${message}.png" alt="${message}" /> </div>`;
   }
 
   if (message != "comment") {
-    div.addEventListener("click", function () {
+    div.childNodes[0].addEventListener("click", function () {
       var newNumber;
       if (message == "like") {
         story.like += 1;
         newNumber = story.like;
-        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
+        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="like" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
       } else {
         story.dislike += 1;
         newNumber = story.dislike;
-        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
+        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="dislike" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
       }
       statusRequest(message, story._id, newNumber);
+    });
+  } else {
+    div.addEventListener("click", function () {
+      var p = document.createElement("p");
+      p.innerText = "123123123testing";
+      div.appendChild(p);
     });
   }
   element.appendChild(div);
