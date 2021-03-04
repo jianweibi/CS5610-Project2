@@ -5,7 +5,6 @@ async function getAllReplies(parentId) {
 }
 
 function renderReplies(parentElement, replies, hasPic) {
-  console.log(replies);
   replies.forEach((reply) => {
     var rowElement = document.createElement("div");
     rowElement.className = "row";
