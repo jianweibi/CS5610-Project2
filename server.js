@@ -1,5 +1,5 @@
 const express = require("express");
-const multer = require("multer");
+const multer = require("Multer");
 const mongo = require("mongodb");
 const mongoClient = mongo.MongoClient;
 var path = require("path");
@@ -9,7 +9,7 @@ const port = 8080;
 const mongoUrl =
   "mongodb+srv://user-321:northeastern5610@cluster0.3uxdm.mongodb.net/Project2?retryWrites=true&w=majority";
 
-const storage = multer.diskStorage({
+const storage = multer.diskStorage({  
   destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
