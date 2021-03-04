@@ -12,9 +12,9 @@ function addSingleButton(element, story, message) {
     div.className = "col-md-4";
   }
   if (message == "like") {
-    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="like" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="like" src="../assets/img/${message}.png" alt="${message}" /> </div><p>${story.like}</p>`;
   } else if (message == "dislike") {
-    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="dislike" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
+    div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="dislike" src="../assets/img/${message}.png" alt="${message}" /> </div><p>${story.dislike}</p>`;
   } else {
     div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="comment" src="../assets/img/${message}.png" alt="${message}" /> </div>`;
   }
@@ -25,12 +25,11 @@ function addSingleButton(element, story, message) {
       if (message == "like") {
         story.like += 1;
         newNumber = story.like;
-        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="like" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.like}`;
       } else {
         story.dislike += 1;
         newNumber = story.dislike;
-        div.innerHTML = `<div class="btn btn-icon ${message}" id="${story._id}-${message}"><img id="dislike" src="../assets/img/${message}.png" alt="${message}" /> </div>\n${story.dislike}`;
       }
+      div.childNodes[1].textContent = newNumber;
       statusRequest(message, story._id, newNumber);
     });
   } else {
