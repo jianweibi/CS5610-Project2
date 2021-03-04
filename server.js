@@ -46,7 +46,7 @@ app.post("/story", upload.single("story-pic"), (req, res) => {
       db.close();
     });
   });
-  res.redirect("/main");
+  res.redirect("/");
 });
 
 app.post("/story/detail", (req, res) => {
