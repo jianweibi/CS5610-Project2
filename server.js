@@ -140,4 +140,4 @@ app.get("/main", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/landing-page.html"));
 });
 
-app.listen(port);
+app.listen(process.env.PORT || 8080)
