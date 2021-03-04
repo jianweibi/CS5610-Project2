@@ -1,6 +1,6 @@
 const express = require("express");
 const mongo = require("mongodb");
-// const multer = require("multer");
+const multer = require("multer");
 const mongoClient = mongo.MongoClient;
 var path = require("path");
 
@@ -9,17 +9,17 @@ const port = 8080;
 const mongoUrl =
   "mongodb+srv://user-321:northeastern5610@cluster0.3uxdm.mongodb.net/Project2?retryWrites=true&w=majority";
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "uploads/");
-//   },
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//     cb(null, file.fieldname + "-" + uniqueSuffix);
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  },
+});
 
-// const upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
 // to support JSON-encoded bodies
 app.use(express.json());
@@ -31,8 +31,8 @@ app.use(
     extended: true,
   })
 );
-app.post("/story", (req, res) => {
-// app.post("/story", upload.single("story-pic"), (req, res) => {
+// app.post("/story", (req, res) => {
+app.post("/story", upload.single("story-pic"), (req, res) => {
   mongoClient.connect(mongoUrl, function (err, db) {
     if (err) throw err;
     var dbo = db.db("proj2");
@@ -140,4 +140,4 @@ app.get("/main", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/landing-page.html"));
 });
 
-app.listen(process.env.PORT || 8080)
+app.listen(process.env.PORT || port)
