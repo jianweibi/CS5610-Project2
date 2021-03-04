@@ -5,6 +5,7 @@ async function getAllReplies(parentId) {
 }
 
 function renderReplies(parentElement, replies, hasPic) {
+  replies.sort((a, b) => (a.datetime > b.datetime ? -1 : 1));
   replies.forEach((reply) => {
     var rowElement = document.createElement("div");
     rowElement.className = "row";

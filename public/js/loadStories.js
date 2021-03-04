@@ -90,6 +90,7 @@ getAllData().then((res) => {
   var element = document.getElementsByClassName(
     "separator separator-primary"
   )[0];
+  res.result.sort((a, b) => (a.datetime > b.datetime ? -1 : 1));
   res.result.forEach(async (story) => {
     var hasPic = false;
 
