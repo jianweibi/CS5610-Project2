@@ -136,8 +136,8 @@ app.get("/getReplies", function (req, res) {
   });
 });
 
-app.get("/main", function (req, res) {
-  res.sendFile(path.join(__dirname + "/public/landing-page.html"));
+app.get("/intro", function (req, res) {
+  res.sendFile(path.join(__dirname + "/public/intro.html"));
 });
 
 app.listen(process.env.PORT || port)
