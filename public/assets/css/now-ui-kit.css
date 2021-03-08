@@ -1441,7 +1441,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   border-radius: 0.1875rem;
   padding: 11px 22px;
   cursor: pointer;
-  background-color: #FFFFFF;
+  background-color: #888888;
   color: #FFFFFF;
 }
 
@@ -4720,6 +4720,7 @@ Created using IcoMoon - icomoon.io
   left: auto;
   right: 10px;
 }
+
 .dropdown .dropdown-menu {
   -webkit-transform: translate3d(0, -25px, 0) !important;
   -moz-transform: translate3d(0, -25px, 0) !important;
