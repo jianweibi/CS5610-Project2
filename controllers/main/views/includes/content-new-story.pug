@@ -1,0 +1,18 @@
+//- content-new-story.pug
+
+div(id="new-story" class="section section-new-story card bg-light")
+  form(id="form-submit-story" action="story" method="post" enctype="multipart/form-data")
+    div(class="form-group")
+      label(for="story-title") Title
+      input(type="text" class="form-control" id="story-title" name="title" placeholder="Batman") 
+    div(class="form-group")
+      label(for="story-content") Share your story
+      textarea(class="form-control" id="story-content" name="content" placeholder="Once upon a time...") 
+    div(class="form-group")
+      label(for="story-username") Share your name
+      input(type="text" class="form-control" id="story-username" name="username" placeholder="Batman")
+    div(class="form-group")
+      button(class="btn btn-primary btn-outline-primary btn-icon btn-round")
+        input(type="file" name="story-pic")
+        i(class="now-ui-icons design_image")
+      button(type="submit" class="btn btn-primary btn-round") Submit
