@@ -7,7 +7,6 @@ var db = require('../../db');
 exports.prefix = "/story"
 
 exports.create = function(req, res, next){
-  req.body.id
   var reply = {
     storyId: req.body.id,
     username: req.body.username,
@@ -18,3 +17,12 @@ exports.create = function(req, res, next){
     res.redirect("/");
   });
 };
+
+exports.list = function(req, res, next) {
+  console.log(req.path);
+  console.log(req.query.storyId);
+  db.select("replies", {storyId: req.query.storyId}, function(data) {
+    console.log(data);
+    res.send(data);
+  });
+}

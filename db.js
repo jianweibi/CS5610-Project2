@@ -61,7 +61,7 @@ exports.update = function(collection, filter, updateDoc, options, callback) {
   client.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true }, async function (err, db) {
     if (err) throw err;
     var dbo = db.db("proj2");
-    await dbo.collection("stories").updateOne(filter, updateDoc, options);
+    await dbo.collection(collection).updateOne(filter, updateDoc, options);
     db.close();
     if (callback) callback();
   });
