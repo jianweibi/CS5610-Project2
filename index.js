@@ -7,6 +7,7 @@ const logger = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const config = require('dotenv').config();
 
 const app = (module.exports = express());
 
@@ -30,6 +31,10 @@ app.response.message = function (msg) {
 
 // log
 if (!module.parent) app.use(logger('dev'));
+
+if (config.error) {
+  console.log("No local .env file specified, ignoring");
+}
 
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));

@@ -2,8 +2,7 @@
 const mongo = require('mongodb');
 const client = mongo.MongoClient;
 
-const mongoUrl =
-  'mongodb+srv://user-321:northeastern5610@cluster0.3uxdm.mongodb.net/Project2?retryWrites=true&w=majority';
+const mongoUrl = process.env.DB_URL;
 
 exports.getObjectId = function (id) {
   return new mongo.ObjectId(id);
