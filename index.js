@@ -89,8 +89,6 @@ app.use(function(req, res, next){
   res.status(404).render('404', { url: req.originalUrl });
 });
 
-if (!module.parent) {
-  process.env.PORT = process.env.PORT || 80;
-  app.listen(process.env.PORT);
-  console.log('Express started on port 8080');
-}
+
+const port = process.env.PORT || 1337;
+app.listen(port);

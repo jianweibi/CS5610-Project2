@@ -17,7 +17,7 @@ div(id="story-list" class="section section-story-list")
             p #{story.content}
           if story.pic
             div(class="col-md-6")
-              div(class="image-container" style="background-image: url(img/uploads/" + story.pic + ")") 
+              div(class="image-container" style="background-image: url(/uploads/" + story.pic + ")") 
         div(class="row")
           div(class="col-md-2")
             form(id="form-story-like" action="story/like" method="post")
