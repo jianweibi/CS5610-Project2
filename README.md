@@ -23,7 +23,7 @@ To build an anonymous story sharing platform, allowing users to share any kind o
 
 ## Slides (TODO)
 
-[Google Slides](https://docs.google.com/)
+[Google Slides](https://docs.google.com/presentation/d/1IbfWF4KVDLNV8igV6sQoc9Q80V2sBHJblvoP0uRPrCo/edit?usp=sharing)
 
 ## Video demo (TODO)
 
