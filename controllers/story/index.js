@@ -18,25 +18,38 @@ var storage = multer.diskStorage({
   },
 });
 
-var upload = multer({ storage: storage });
+var imgFilter = function(req, file, cb) {
+  // Accept images only
+  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+      req.fileValidationError = 'Only image files are allowed!';
+      return cb(null, false);
+  }
+  cb(null, true);
+};
+
+var upload = multer({ storage: storage, fileFilter : imgFilter, limits : {fileSize: 1024 * 1024}});
 
 exports.before = upload.single("story-pic");
 
 exports.create = function(req, res, next){
-  var story = {
-    title: req.body.title,
-    username: req.body.username,
-    content: req.body.content,
-    datetime: new Date(),
-    like: 0,
-    dislike: 0,
-  };
-  if (req.file) {
-    story.pic = req.file.filename;
-  }
-  db.insert("stories", story, function() {
+  if (req.fileValidationError) {
     res.redirect("/");
-  });
+  } else {
+    var story = {
+      title: req.body.title,
+      username: req.body.username,
+      content: req.body.content,
+      datetime: new Date(),
+      like: 0,
+      dislike: 0,
+    };
+    if (req.file) {
+      story.pic = req.file.filename;
+    }
+    db.insert("stories", story, function() {
+      res.redirect("/");
+    });
+  }
 };
 
 exports.like = function(req, res, next){
