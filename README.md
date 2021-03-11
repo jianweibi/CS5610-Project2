@@ -21,13 +21,13 @@ To build an anonymous story sharing platform, allowing users to share any kind o
 ## Screenshot
 ![](https://raw.githubusercontent.com/Yuchen112211/CS5610-Project2/main/public/img/screenshot-storysharing.png)
 
-## Slides (TODO)
+## Slides
 
 [Google Slides](https://docs.google.com/presentation/d/1IbfWF4KVDLNV8igV6sQoc9Q80V2sBHJblvoP0uRPrCo/edit?usp=sharing)
 
-## Video demo (TODO)
+## Video demo
 
-[Demo]()
+[Demo](https://youtu.be/uc3gEe3e8gc)
 
 # Instructions to build
 
@@ -43,7 +43,13 @@ To build an anonymous story sharing platform, allowing users to share any kind o
    npm install
    ```
 
-3. Start the server:
+3. Add your local .env file to contain your MongoDB url
+  - In .env file, at least add DB_URL
+    ```
+    DB_URL=mongodb+srv://username:password@.....
+    ```
+
+4. Start the server:
    ```
    npm start
    ```
